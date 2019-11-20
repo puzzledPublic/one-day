@@ -1,14 +1,13 @@
-package com.oneday.sofa.domain.board.domain;
+package com.oneday.sofa.domain.article.domain;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-
-import com.oneday.sofa.domain.article.domain.Article;
 
 @Entity
 public class Board {
@@ -17,6 +16,7 @@ public class Board {
 	@GeneratedValue
 	private Long id;
 	
+	@Column(nullable=false, unique=true)
 	private String name;
 	
 	@OneToMany(mappedBy="board")
@@ -36,7 +36,6 @@ public class Board {
 	public String getName() {
 		return name;
 	}
-
 
 	public List<Article> getArticles() {
 		return articles;

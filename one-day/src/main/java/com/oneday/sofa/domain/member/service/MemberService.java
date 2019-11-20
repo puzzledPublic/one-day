@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.oneday.sofa.domain.member.dao.MemberRepository;
 import com.oneday.sofa.domain.member.domain.Member;
+import com.oneday.sofa.domain.member.dto.JWTMember;
 import com.oneday.sofa.domain.member.dto.SignUpRequest;
 import com.oneday.sofa.domain.member.exception.EmailDuplicateException;
 import com.oneday.sofa.domain.member.exception.UserNameDuplicateException;
@@ -34,5 +35,9 @@ public class MemberService {
 		Member member = signUpDTO.toEntity(passwordEncoder);
 		
 		memberRepository.save(member);
+	}
+	
+	public void deleteMember(JWTMember jwtMember) {
+		memberRepository.deleteById(jwtMember.getId());
 	}
 }

@@ -46,30 +46,17 @@ public class JWTAOP {
 		HttpServletRequest request = ((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest();
 		
 		//Authorization Header에서 JWT 파싱
-		JWToken jwt = new JWToken(getBearerToken(request));
+		JWToken jwt = JWToken.from(request);
 		Jws<Claims> jws = jwtProcessor.parseJWT(jwt);
 		
 		//JWT에서 정보 추출
-		JWTMember jwtMember = new JWTMember(jws.getBody());
+		JWTMember jwtMember = new JWTMember(jws);
+		
 		//요청 권한이 있는지 확인
 		checkRole(joinPoint, jwtMember);
 		
 		//target 메소드에서 정보가 필요한 경우 넘긴다. 
 		addClaimsToJoinPoint(joinPoint, jwtMember);
-	}
-	
-	private String getBearerToken(HttpServletRequest request) {
-		String authHeaderString = request.getHeader(HttpHeaders.AUTHORIZATION);
-		if(authHeaderString != null) {
-			String[] authHeaderValues = authHeaderString.split(" ");
-			for(int i = 0; i < authHeaderValues.length; i++) {
-				if(("bearer".equals(authHeaderValues[i]) || "Bearer".equals(authHeaderValues[i])) && (i + 1) < authHeaderValues.length) {
-					return authHeaderValues[i + 1];
-				}
-			}
-		}
-
-		return null;
 	}
 	
 	private void checkRole(JoinPoint joinPoint, JWTMember jwtMember) {
@@ -78,8 +65,8 @@ public class JWTAOP {
 		Role requiredRole = annotation.value();
 		Role requestRole = jwtMember.getRole();
 		
-		log.info("username: " + jwtMember.getUserName() + " requestRole: " + requestRole + ", requiredRole: " + requiredRole);
 		if(!requestRole.hasRole(requiredRole)) {
+			log.info("username: " + jwtMember.getUserName() + " requestRole: " + requestRole + ", requiredRole: " + requiredRole);
 			throw new UnAuthorizationException();
 		}
 	}

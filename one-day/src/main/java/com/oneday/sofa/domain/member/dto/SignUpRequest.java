@@ -9,7 +9,6 @@ import org.hibernate.validator.constraints.Length;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.oneday.sofa.domain.common.EntityDate;
-import com.oneday.sofa.domain.common.Role;
 import com.oneday.sofa.domain.member.domain.Member;
 
 public class SignUpRequest {

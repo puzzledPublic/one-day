@@ -7,7 +7,6 @@ import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 
-import com.oneday.sofa.domain.board.domain.Board;
 import com.oneday.sofa.domain.common.EntityDate;
 import com.oneday.sofa.domain.common.RecommendOrNot;
 import com.oneday.sofa.domain.member.domain.Member;

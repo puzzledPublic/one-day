@@ -3,6 +3,7 @@ package com.oneday.sofa.domain.member.dto;
 import com.oneday.sofa.domain.common.Role;
 
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
 
 public class JWTMember {
 	private Long id;
@@ -17,7 +18,8 @@ public class JWTMember {
 		this.role = role;
 	}
 	
-	public JWTMember(Claims claims) {
+	public JWTMember(Jws<Claims> jws) {
+		Claims claims = jws.getBody();
 		this.id = claims.get("id", Long.class);
 		this.userName = claims.get("username", String.class);
 		this.role = Role.valueOf(claims.get("role", String.class));

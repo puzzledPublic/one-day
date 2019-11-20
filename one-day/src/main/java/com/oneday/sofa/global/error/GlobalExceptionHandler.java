@@ -14,6 +14,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
@@ -67,6 +68,14 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 		log.error("No handler Found Error", ex);
 		ErrorResponse errorResponse = new ErrorResponse(ErrorCode.NO_HANDLER_FOUND);
 		return new ResponseEntity<Object>(errorResponse, HttpStatus.NOT_FOUND);
+	}
+	
+	//업로드 파일 크기 초과
+	@ExceptionHandler(MaxUploadSizeExceededException.class)
+	public ResponseEntity<ErrorResponse> handleMaxUploadExceededException(MaxUploadSizeExceededException ex) {
+		log.error("Uploaded file size is Exceeded", ex);
+		ErrorResponse errorResponse = new ErrorResponse(ErrorCode.UPLOAD_FILE_SIZE_EXCEED);
+		return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
 	}
 	
 	//JWT 예외
