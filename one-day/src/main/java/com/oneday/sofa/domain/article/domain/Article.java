@@ -1,11 +1,17 @@
 package com.oneday.sofa.domain.article.domain;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 import com.oneday.sofa.domain.common.EntityDate;
 import com.oneday.sofa.domain.common.RecommendOrNot;
@@ -29,6 +35,9 @@ public class Article {
 	@ManyToOne
 	private Board board;
 	
+	@OneToMany(mappedBy="article", cascade=CascadeType.ALL)
+	private List<ArticleFile> articleFiles = new ArrayList<>(); 
+	
 	private int hits;
 	
 	@Embedded
@@ -39,13 +48,14 @@ public class Article {
 	
 	protected Article() {}
 
-	public Article(String title, String content, Member member, Board board, int hits, RecommendOrNot recommendOrNot) {
+	public Article(String title, String content, Member member, Board board) {
 		this.title = title;
 		this.content = content;
 		this.member = member;
 		this.board = board;
-		this.hits = hits;
-		this.recommendOrNot = recommendOrNot;
+		this.hits = 0;
+		this.recommendOrNot = new RecommendOrNot(0, 0);
+		this.dates = new EntityDate(LocalDateTime.now(), LocalDateTime.now());
 	}
 
 	public Long getId() {
@@ -68,6 +78,10 @@ public class Article {
 		return board;
 	}
 	
+	public List<ArticleFile> getArticleFiles() {
+		return articleFiles;
+	}
+	
 	public int getHits() {
 		return hits;
 	}
@@ -80,4 +94,17 @@ public class Article {
 		return dates;
 	}
 	
+	public void addArticleFile(ArticleFile articleFile) {
+		if(this == articleFile.getArticle()) {
+			return;
+		}
+		articleFile.setArticle(this);
+		this.getArticleFiles().add(articleFile);
+	}
+	
+	public void addArticleFiles(List<ArticleFile> articleFiles) {
+		for(ArticleFile articleFile : articleFiles) {
+			this.addArticleFile(articleFile);
+		}
+	}
 }

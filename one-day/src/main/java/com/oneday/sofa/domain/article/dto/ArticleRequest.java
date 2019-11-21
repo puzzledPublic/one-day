@@ -8,7 +8,7 @@ import javax.validation.constraints.NotEmpty;
 
 import org.springframework.web.multipart.MultipartFile;
 
-import com.oneday.sofa.domain.article.validation.UploadFile;
+import com.oneday.sofa.domain.common.validation.UploadFile;
 
 
 public class ArticleRequest {
