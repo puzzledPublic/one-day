@@ -10,7 +10,6 @@ import org.aspectj.lang.reflect.MethodSignature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -60,15 +59,31 @@ public class JWTAOP {
 	}
 	
 	private void checkRole(JoinPoint joinPoint, JWTMember jwtMember) {
-		MethodSignature methodSignature = (MethodSignature)joinPoint.getSignature();
-		CheckJWT annotation = methodSignature.getMethod().getAnnotation(CheckJWT.class);
-		Role requiredRole = annotation.value();
+		Role requiredRole = getRequiredRole(joinPoint);
 		Role requestRole = jwtMember.getRole();
 		
 		if(!requestRole.hasRole(requiredRole)) {
 			log.info("username: " + jwtMember.getUserName() + " requestRole: " + requestRole + ", requiredRole: " + requiredRole);
 			throw new UnAuthorizationException();
 		}
+	}
+	
+	private Role getRequiredRole(JoinPoint joinPoint) {
+		MethodSignature methodSignature = (MethodSignature)joinPoint.getSignature();
+		
+		//Class의 annotation 확인
+		@SuppressWarnings("unchecked")
+		CheckJWT annotationOnClass = (CheckJWT)methodSignature.getDeclaringType().getAnnotation(CheckJWT.class);
+		//Method의 annotation 확인
+		CheckJWT annotationOnMethod = methodSignature.getMethod().getAnnotation(CheckJWT.class);
+		
+		log.info("annotationOnClass: " + annotationOnClass + " annotationOnMethod: " + annotationOnMethod);
+		//Method의 annotation에 있는 Role이 우선한다.
+		if(annotationOnMethod != null) {
+			return annotationOnMethod.value();
+		}
+		
+		return annotationOnClass.value();
 	}
 	
 	private void addClaimsToJoinPoint(JoinPoint joinPoint, JWTMember jwtMember) {
