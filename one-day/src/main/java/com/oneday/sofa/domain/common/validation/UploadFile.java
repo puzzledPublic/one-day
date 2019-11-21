@@ -1,4 +1,4 @@
-package com.oneday.sofa.domain.article.validation;
+package com.oneday.sofa.domain.common.validation;
 
 import static java.lang.annotation.ElementType.FIELD;
 import static java.lang.annotation.ElementType.TYPE;

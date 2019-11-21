@@ -1,4 +1,4 @@
-package com.oneday.sofa.domain.article.validation;
+package com.oneday.sofa.domain.common.validation;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
