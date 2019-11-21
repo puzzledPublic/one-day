@@ -9,12 +9,13 @@ import org.hibernate.validator.constraints.Length;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.oneday.sofa.domain.common.EntityDate;
+import com.oneday.sofa.domain.common.validation.Username;
 import com.oneday.sofa.domain.member.domain.Member;
 
 public class SignUpRequest {
 	
 	@NotEmpty
-	@Length(min=4, max=30)
+	@Username(min=5, max=20)
 	private String userName;	//request json에서 userName으로 보내야 읽힘.
 	
 	@NotEmpty

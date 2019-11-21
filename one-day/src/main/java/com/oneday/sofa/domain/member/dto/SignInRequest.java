@@ -4,10 +4,12 @@ import javax.validation.constraints.NotEmpty;
 
 import org.hibernate.validator.constraints.Length;
 
+import com.oneday.sofa.domain.common.validation.Username;
+
 public class SignInRequest {
 	
 	@NotEmpty
-	@Length(min=4, max=30)
+	@Username(min=5, max=20)
 	private String userName;
 	
 	@NotEmpty
