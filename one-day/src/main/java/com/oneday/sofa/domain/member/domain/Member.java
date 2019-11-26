@@ -16,6 +16,7 @@ import javax.persistence.OneToMany;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.oneday.sofa.domain.article.domain.Article;
 import com.oneday.sofa.domain.common.EntityDate;
 import com.oneday.sofa.domain.common.Role;
@@ -94,6 +95,7 @@ public class Member {
 		return dateInfo;
 	}
 	
+	@JsonIgnore
 	public Map<String, Object> getJWTClaims() {
 		Map<String, Object> claims = new HashMap<>();
 		claims.put("id", this.getId());
