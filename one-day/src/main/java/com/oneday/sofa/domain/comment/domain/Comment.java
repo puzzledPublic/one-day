@@ -34,6 +34,8 @@ public class Comment {
 	@Embedded
 	private EntityDate dates;
 	
+	private boolean removed;
+	
 	protected Comment() {}
 	
 	public Comment(String content, Article article, Member member, RecommendOrNot recommendOrNot) {
@@ -41,6 +43,7 @@ public class Comment {
 		this.article = article;
 		this.member = member;
 		this.recommendOrNot = recommendOrNot;
+		this.removed = false;
 	}
 
 	public Long getId() {
@@ -67,4 +70,11 @@ public class Comment {
 		return dates;
 	}
 	
+	public boolean isRemoved() {
+		return removed;
+	}
+	
+	public void setRemoved(boolean removed) {
+		this.removed = removed;
+	}
 }

@@ -13,6 +13,7 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import com.oneday.sofa.domain.comment.domain.Comment;
 import com.oneday.sofa.domain.common.EntityDate;
 import com.oneday.sofa.domain.common.RecommendOrNot;
 import com.oneday.sofa.domain.member.domain.Member;
@@ -38,6 +39,9 @@ public class Article {
 	@OneToMany(mappedBy="article", cascade=CascadeType.ALL)
 	private List<ArticleFile> articleFiles = new ArrayList<>(); 
 	
+	@OneToMany(mappedBy="article", cascade=CascadeType.ALL)
+	private List<Comment> comments = new ArrayList<>();
+	
 	private int hits;
 	
 	@Embedded
@@ -45,6 +49,8 @@ public class Article {
 
 	@Embedded
 	private EntityDate dates;
+	
+	private boolean removed;	//삭제시 DB서 지우는것이 아닌 삭제 체크만 해준다.
 	
 	protected Article() {}
 
@@ -56,6 +62,7 @@ public class Article {
 		this.hits = 0;
 		this.recommendOrNot = new RecommendOrNot(0, 0);
 		this.dates = new EntityDate(LocalDateTime.now(), LocalDateTime.now());
+		this.removed = false;
 	}
 
 	public Long getId() {
@@ -82,6 +89,10 @@ public class Article {
 		return articleFiles;
 	}
 	
+	public List<Comment> getComments() {
+		return comments;
+	}
+	
 	public int getHits() {
 		return hits;
 	}
@@ -92,6 +103,14 @@ public class Article {
 	
 	public EntityDate getDates() {
 		return dates;
+	}
+	
+	public boolean isRemoved() {
+		return removed;
+	}
+	
+	public void setRemoved() {
+		this.removed = true;
 	}
 	
 	public void addArticleFile(ArticleFile articleFile) {
