@@ -18,7 +18,7 @@ public class FileHelper {
 		String newName = UUID.randomUUID().toString() + originExtension;
 		
 		try {
-			File file = new File("C:\\Users\\KHM\\Pictures\\test\\" + newName);
+			File file = new File("C:\\Users\\KHM\\Pictures\\uploads\\" + newName);
 			multipartFile.transferTo(file);
 		}
 		catch(IOException | IllegalStateException ex) {
