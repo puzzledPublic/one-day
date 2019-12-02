@@ -1,17 +1,13 @@
 package com.oneday.sofa.domain.article.service;
 
-import java.util.List;
-
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.oneday.sofa.domain.article.dao.ArticleRepository;
 import com.oneday.sofa.domain.article.dao.BoardRepository;
 import com.oneday.sofa.domain.article.domain.Article;
-import com.oneday.sofa.domain.article.domain.ArticleFile;
 import com.oneday.sofa.domain.article.domain.Board;
 import com.oneday.sofa.domain.article.dto.ArticleRequest;
 import com.oneday.sofa.domain.article.dto.ArticleResponse;
@@ -23,6 +19,7 @@ import com.oneday.sofa.global.error.exception.EntityNotFoundException;
 import com.oneday.sofa.global.error.exception.UnAuthorizationException;
 
 @Service
+@Transactional
 public class ArticleService {
 	
 	@Autowired
@@ -37,6 +34,7 @@ public class ArticleService {
 	//글 조회
 	public ArticleResponse searchArticle(long articleId) {
 		Article article = this.findNotRemovedArticle(articleId);
+		article.increaseHits();
 		return new ArticleResponse(article);
 	}
 	
@@ -48,17 +46,16 @@ public class ArticleService {
 
 		String title = articleRequest.getTitle();
 		String content = articleRequest.getContent();
-		List<MultipartFile> uploadFiles = articleRequest.getFiles();
-		List<ArticleFile> articleFiles = ArticleFile.toArticleFileList(uploadFiles);
+//		List<MultipartFile> uploadFiles = articleRequest.getFiles();
+//		List<ArticleFile> articleFiles = ArticleFile.toArticleFileList(uploadFiles);
 		
 		Article article = new Article(title, content, member, board);
-		article.addArticleFiles(articleFiles);
+//		article.addArticleFiles(articleFiles);
 		
 		articleRepository.save(article);
 	}
 	
 	//글 삭제
-	@Transactional
 	public void removeArticle(JWTMember jwtMember, long articleId) {
 		Article article = this.findNotRemovedArticle(articleId);
 		
@@ -70,8 +67,21 @@ public class ArticleService {
 		article.setRemoved();
 	}
 	
+	//글 수정
+	public void modifyArticle(JWTMember jwtMember, ArticleRequest articleRequest, long articleId) {
+		Article article = this.findNotRemovedArticle(articleId);
+		
+		Member owner = article.getMember();
+		if(owner.getId() != jwtMember.getId()) {
+			throw new UnAuthorizationException();
+		}
+		
+		article.updateBy(articleRequest);
+	}
+	
 	private Article findNotRemovedArticle(long articleId) {
 		Article article = articleRepository.findByIdAndRemovedFalse(articleId).orElseThrow(EntityNotFoundException::new);
 		return article;
 	}
+	
 }

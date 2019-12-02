@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -37,19 +38,22 @@ public class ArticleController {
 	@CheckJWT
 	@PostMapping
 	public void createArticle(JWTMember jwtMember, @Valid ArticleRequest articleRequest) {
-		log.info(articleRequest.getTitle() + " " + articleRequest.getContent() + " " + articleRequest.getFiles().size());
+		log.info(articleRequest.getTitle() + " " + articleRequest.getContent() + " " /* + articleRequest.getFiles().size()*/);
 		
 		articleService.saveArticle(jwtMember, articleRequest);
 	}
 	
-	//TODO:: 글 삭제
+	//글 삭제
 	@CheckJWT
 	@DeleteMapping("/{articleId}")
 	public void deleteArticle(JWTMember jwtMember, @PathVariable long articleId) {
 		articleService.removeArticle(jwtMember, articleId);
 	}
 	
-	
-	
-	//TODO:: 글 수정
+	//글 수정
+	@CheckJWT
+	@PutMapping("/{articleId}")
+	public void updateArticle(JWTMember jwtMember, @Valid ArticleRequest articleRequest, @PathVariable long articleId) {
+		articleService.modifyArticle(jwtMember, articleRequest, articleId);
+	}
 }
