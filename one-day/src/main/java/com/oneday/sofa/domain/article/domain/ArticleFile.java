@@ -15,7 +15,8 @@ import org.springframework.web.multipart.MultipartFile;
 import com.oneday.sofa.domain.common.FileInfo;
 import com.oneday.sofa.global.util.FileHelper;
 
-@Entity
+//wysiwyg으로 인한 보류.
+//@Entity
 public class ArticleFile {
 	
 	@Id

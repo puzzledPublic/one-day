@@ -1,14 +1,7 @@
 package com.oneday.sofa.domain.article.dto;
 
-import java.util.Collections;
-import java.util.List;
-
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
-
-import org.springframework.web.multipart.MultipartFile;
-
-import com.oneday.sofa.domain.common.validation.UploadFile;
 
 
 public class ArticleRequest {
@@ -20,7 +13,7 @@ public class ArticleRequest {
 	@Min(1)
 	private Long boardId;
 
-	private List<@UploadFile MultipartFile> files = Collections.emptyList();
+//	private List<@UploadFile MultipartFile> files = Collections.emptyList();
 	
 	public String getTitle() {
 		return title;
@@ -46,12 +39,12 @@ public class ArticleRequest {
 		this.boardId = boardId;
 	}
 	
-	public List<MultipartFile> getFiles() {
-		return files;
-	}
-	
-	public void setFiles(List<MultipartFile> files) {
-		this.files = files;
-	}
+//	public List<MultipartFile> getFiles() {
+//		return files;
+//	}
+//	
+//	public void setFiles(List<MultipartFile> files) {
+//		this.files = files;
+//	}
 	
 }
