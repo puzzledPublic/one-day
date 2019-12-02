@@ -39,7 +39,7 @@ public class MemberController {
 		memberService.signUp(signUpDTO);
 	}
 	
-	//회원 삭제
+	//TODO:: 회원 삭제, 나중에 DB작성 시 연관된 외래키를 작성하지 않고 회원 엔티티에 플래그로 삭제하도록 변경.
 	@CheckJWT
 	@DeleteMapping
 	public void deleteMember(JWTMember jwtMember) {
