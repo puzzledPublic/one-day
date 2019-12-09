@@ -14,7 +14,10 @@ public class EntityDate {
 	
 	private LocalDateTime updatedAt;
 	
-	protected EntityDate() {}
+	public EntityDate() {
+		this.createdAt = LocalDateTime.now();
+		this.updatedAt = LocalDateTime.now();
+	}
 	
 	public EntityDate(LocalDateTime createdAt, LocalDateTime updatedAt) {
 		this.createdAt = createdAt;
@@ -27,6 +30,10 @@ public class EntityDate {
 	
 	public LocalDateTime getUpdatedAt() {
 		return updatedAt;
+	}
+	
+	public void updateDate() {
+		this.updatedAt = LocalDateTime.now();
 	}
 
 	@Override
