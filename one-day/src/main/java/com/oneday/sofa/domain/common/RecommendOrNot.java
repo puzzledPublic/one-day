@@ -9,11 +9,9 @@ public class RecommendOrNot {
 	
 	private int hate;
 	
-	protected RecommendOrNot() {}
-	
-	public RecommendOrNot(int recommend, int hate) {
-		this.recommend = recommend;
-		this.hate = hate;
+	public RecommendOrNot() {
+		this.recommend = 0;
+		this.hate = 0;
 	}
 	
 	public int getrecommend() {
