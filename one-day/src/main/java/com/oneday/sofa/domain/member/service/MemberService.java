@@ -10,6 +10,7 @@ import com.oneday.sofa.domain.member.domain.Member;
 import com.oneday.sofa.domain.member.dto.JWTMember;
 import com.oneday.sofa.domain.member.dto.SignUpRequest;
 import com.oneday.sofa.domain.member.exception.EmailDuplicateException;
+import com.oneday.sofa.domain.member.exception.MemberNotFoundException;
 import com.oneday.sofa.domain.member.exception.UserNameDuplicateException;
 
 @Service
@@ -39,5 +40,10 @@ public class MemberService {
 	
 	public void deleteMember(JWTMember jwtMember) {
 		memberRepository.deleteById(jwtMember.getId());
+	}
+	
+	public Member findMemberById(long memberId) {
+		Member member = memberRepository.findById(memberId).orElseThrow(MemberNotFoundException::new);
+		return member;
 	}
 }
