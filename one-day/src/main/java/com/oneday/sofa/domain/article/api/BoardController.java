@@ -20,7 +20,7 @@ public class BoardController {
 	@Autowired
 	BoardService boardService;
 	
-	//TODO:: 해당 게시판 글 목록 조회
+	//TODO:: 해당 게시판 글 목록 조회, Pageable 설정 고민
 	@GetMapping("/{boardName}")
 	public List<BoardResponse> getArticleList(@PathVariable String boardName, @PageableDefault Pageable pageable) {
 		return boardService.pagingBoard(boardName, pageable);

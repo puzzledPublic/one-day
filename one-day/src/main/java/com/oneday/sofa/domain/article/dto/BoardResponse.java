@@ -2,7 +2,6 @@ package com.oneday.sofa.domain.article.dto;
 
 import com.oneday.sofa.domain.article.domain.Article;
 import com.oneday.sofa.domain.common.EntityDate;
-import com.oneday.sofa.domain.member.domain.Member;
 
 public class BoardResponse {
 
@@ -12,13 +11,13 @@ public class BoardResponse {
 	
 	private String userName;
 	
-	private int replyCount;
+	private long replyCount;
 	
 	private int hits;
 	
 	private EntityDate dates;
 	
-	public BoardResponse(Article article, int replyCount) {
+	public BoardResponse(Article article, long replyCount) {
 		this.id = article.getId();
 		this.title = article.getTitle();
 		this.userName = article.getMember().getUserName();
@@ -39,7 +38,7 @@ public class BoardResponse {
 		return userName;
 	}
 	
-	public int getReplyCount() {
+	public long getReplyCount() {
 		return replyCount;
 	}
 	

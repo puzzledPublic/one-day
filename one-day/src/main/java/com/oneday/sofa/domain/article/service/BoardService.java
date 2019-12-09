@@ -36,7 +36,7 @@ public class BoardService {
 		
 		List<BoardResponse> articleList = new ArrayList<>();
 		for(Object[] objArr : list) {
-			articleList.add(new BoardResponse((Article)objArr[0], (int)objArr[1]));
+			articleList.add(new BoardResponse((Article)objArr[0], (long)objArr[1]));
 		}
 		
 		return articleList;

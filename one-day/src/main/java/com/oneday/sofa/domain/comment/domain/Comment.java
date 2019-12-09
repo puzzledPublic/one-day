@@ -2,12 +2,14 @@ package com.oneday.sofa.domain.comment.domain;
 
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
+import javax.persistence.Transient;
 
-import com.oneday.sofa.domain.article.domain.Article;
+import com.oneday.sofa.domain.comment.dto.CommentRequest;
 import com.oneday.sofa.domain.common.EntityDate;
 import com.oneday.sofa.domain.common.RecommendOrNot;
 import com.oneday.sofa.domain.member.domain.Member;
@@ -15,17 +17,21 @@ import com.oneday.sofa.domain.member.domain.Member;
 @Entity
 public class Comment {
 	
+	@Transient
+	public static final long PARENT_COMMENT = 0L;
+	
 	@Id
 	@GeneratedValue
 	private Long id;
 	
+	private Long parentId;
+	
 	@Lob
 	private String content;
 	
-	@ManyToOne
-	private Article article;
+	private Long articleId;
 	
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.LAZY)
 	private Member member;
 	
 	@Embedded
@@ -38,24 +44,35 @@ public class Comment {
 	
 	protected Comment() {}
 	
-	public Comment(String content, Article article, Member member, RecommendOrNot recommendOrNot) {
+	private Comment(Long articleId, String content, Member member) {
+		this.articleId = articleId;
 		this.content = content;
-		this.article = article;
 		this.member = member;
-		this.recommendOrNot = recommendOrNot;
+		this.recommendOrNot = new RecommendOrNot();
+		this.dates = new EntityDate();
 		this.removed = false;
+	}
+	
+	public Comment(Long articleId, String content, Member member, long parentId) {
+		this(articleId, content, member);
+		this.parentId = parentId;
 	}
 
 	public Long getId() {
 		return id;
 	}
-
+	
+	public Long getParentId() {
+		return parentId;
+	}
+	
 	public String getContent() {
+		if(isRemoved()) return "삭제 된 댓글입니다.";
 		return content;
 	}
-
-	public Article getArticle() {
-		return article;
+	
+	public Long getArticleId() {
+		return articleId;
 	}
 
 	public Member getMember() {
@@ -76,5 +93,14 @@ public class Comment {
 	
 	public void setRemoved(boolean removed) {
 		this.removed = removed;
+	}
+	
+	public boolean isNested() {
+		return this.getParentId() != Comment.PARENT_COMMENT;
+	}
+	
+	public void updateBy(CommentRequest commentRequest) {
+		this.content = commentRequest.getContent();
+		this.getDates().updateDate();
 	}
 }

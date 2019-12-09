@@ -1,10 +1,8 @@
 package com.oneday.sofa.domain.article.dto;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.oneday.sofa.domain.article.domain.Article;
-import com.oneday.sofa.domain.comment.domain.Comment;
 import com.oneday.sofa.domain.comment.dto.CommentResponse;
 import com.oneday.sofa.domain.common.EntityDate;
 import com.oneday.sofa.domain.member.dto.MemberResponse;
@@ -17,8 +15,6 @@ public class ArticleResponse {
 	
 	private String content;
 	
-//	private List<String> fileNames;
-	
 	private MemberResponse member;
 	
 	private List<CommentResponse> comments;
@@ -29,27 +25,14 @@ public class ArticleResponse {
 	
 	protected ArticleResponse() {}
 	
-	public ArticleResponse(Article article) {
+	public ArticleResponse(Article article, List<CommentResponse> comments) {
 		this.id = article.getId();
 		this.title = article.getTitle();
 		this.content = article.getContent();
-//		this.fileNames = setFileNames(article.getArticleFiles());
 		this.member = new MemberResponse(article.getMember());
-		this.comments = setComments(article.getComments());
+		this.comments = comments;
 		this.hits = article.getHits();
 		this.dates = article.getDates();
-	}
-	
-//	private List<String> setFileNames(List<ArticleFile> articleFiles) {
-//		List<String> fileNames = new ArrayList<>();
-//		articleFiles.forEach((articleFile) -> fileNames.add(articleFile.getFileInfo().getName()));
-//		return fileNames;
-//	}
-	
-	private List<CommentResponse> setComments(List<Comment> comments) {
-		List<CommentResponse> commentResponses = new ArrayList<>();
-		comments.forEach((comment) -> commentResponses.add(new CommentResponse(comment)));
-		return commentResponses;
 	}
 	
 	public Long getId() {
@@ -63,10 +46,6 @@ public class ArticleResponse {
 	public String getContent() {
 		return content;
 	}
-	
-//	public List<String> getFileNames() {
-//		return fileNames;
-//	}
 	
 	public MemberResponse getMember() {
 		return member;

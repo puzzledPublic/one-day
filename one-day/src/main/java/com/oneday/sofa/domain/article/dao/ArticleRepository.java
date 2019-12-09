@@ -16,7 +16,8 @@ import com.oneday.sofa.domain.article.domain.Board;
 public interface ArticleRepository extends JpaRepository<Article, Long>{
 	
 	Optional<Article> findByIdAndRemovedFalse(long id);
-
-	@Query("SELECT a, a.comments.size FROM Article a join fetch a.member WHERE a.board = :board AND a.removed = false")
+	
+	@Query("SELECT a, (SELECT count(*) FROM Comment c WHERE a.id = c.articleId) FROM Article a "
+			+ "join fetch a.member WHERE a.board = :board AND a.removed = false")
 	List<Object[]> findByBoardAndRemovedFalse(@Param("board") Board board, Pageable pageable);
 }
