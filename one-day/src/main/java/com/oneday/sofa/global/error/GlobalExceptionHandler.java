@@ -1,6 +1,10 @@
 package com.oneday.sofa.global.error;
 
 import java.util.List;
+import java.util.Set;
+
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -68,6 +72,19 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 		log.error("No handler Found Error", ex);
 		ErrorResponse errorResponse = new ErrorResponse(ErrorCode.NO_HANDLER_FOUND);
 		return new ResponseEntity<Object>(errorResponse, HttpStatus.NOT_FOUND);
+	}
+	
+	//Pathvariable, requestParam.. vaildation 예외
+	@ExceptionHandler(ConstraintViolationException.class)
+	public ResponseEntity<ErrorResponse> handleConstraintViolationException(ConstraintViolationException ex) {
+		Set<ConstraintViolation<?>> violations = ex.getConstraintViolations();
+		StringBuilder sb = new StringBuilder();
+		for(ConstraintViolation<?> violation : violations) {
+			sb.append(violation.getMessage());
+		}
+		log.error(sb.toString(), ex);
+		ErrorResponse errorResponse = new ErrorResponse(400, "GLO004", sb.toString());
+		return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
 	}
 	
 	//업로드 파일 크기 초과
