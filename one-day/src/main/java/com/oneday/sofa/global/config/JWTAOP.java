@@ -41,6 +41,8 @@ public class JWTAOP {
 	
 	@Before("execution(public * *(..)) && (annotatedMethod() || annotatedClass())")
 	public void checkJWT(JoinPoint joinPoint) throws JwtException {
+		//TODO::로그인 상태인지 아닌지 확인하기 위해 헤더의 jwt를 파싱하여 JWTMember를 만드는 부분을 필터로 옮기는게 어떤가?
+		
 		//현재 request 컨텍스트
 		HttpServletRequest request = ((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest();
 		

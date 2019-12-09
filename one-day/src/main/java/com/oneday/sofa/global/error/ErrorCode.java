@@ -5,6 +5,8 @@ public enum ErrorCode {
 	//JWT
 	INVALID_JWT(400, "JWT001", "Invalid JWT"),
 	
+	//댓글
+	NESTED_COMMENT(400, "C001", "Comment is nested more than two"),
 	
 	//회원
 	USERNAME_DUPLICATION(400, "M001", "Username is already exist"),
@@ -17,6 +19,7 @@ public enum ErrorCode {
 	INTERNAL_SERVER_ERROR(500, "G003", "Internal server error happened"),
 	NO_HANDLER_FOUND(404, "G004", "Not Found"),
 	UPLOAD_FILE_SIZE_EXCEED(400, "G005", "Upload file size is exceeded"),
+	
 	;
 	
 	private int status;
