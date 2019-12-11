@@ -48,6 +48,8 @@ public class Member {
 	@Embedded
 	private EntityDate dateInfo;
 	
+	boolean removed;
+	
 	protected Member() { }
 
 	public Member(String userName, String nickName, String password, String email, Role role, EntityDate dateInfo) {
@@ -57,6 +59,7 @@ public class Member {
 		this.email = email;
 		this.role = role;
 		this.dateInfo = dateInfo;
+		this.removed = false;
 	}
 	
 	public Member(String userName, String nickName, String password, String email, EntityDate dateInfo) {
@@ -93,6 +96,14 @@ public class Member {
 
 	public EntityDate getDateInfo() {
 		return dateInfo;
+	}
+	
+	public boolean isRemoved() {
+		return removed;
+	}
+	
+	public void remove() {
+		removed = true;
 	}
 	
 	@JsonIgnore

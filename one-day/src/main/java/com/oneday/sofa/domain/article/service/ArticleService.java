@@ -68,7 +68,7 @@ public class ArticleService {
 			throw new UnAuthorizationException();
 		}
 		
-		article.setRemoved();
+		article.remove();
 	}
 	
 	//글 수정
