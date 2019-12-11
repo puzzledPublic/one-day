@@ -32,6 +32,10 @@ public class CommentService {
 	@Autowired
 	CommentRepository commentRepository;
 	
+	public Comment findComment(long commentId) {
+		return commentRepository.findById(commentId).orElseThrow(() -> new EntityNotFoundException("Comment"));
+	}
+	
 	public List<CommentResponse> getArticleComments(long articleId) {
 		List<Comment> comments = commentRepository.findByArticleId(articleId);
 		return CommentResponse.toList(comments);
