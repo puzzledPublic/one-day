@@ -90,7 +90,7 @@ public class Article {
 		return removed;
 	}
 	
-	public void setRemoved() {
+	public void remove() {
 		this.removed = true;
 	}
 	
