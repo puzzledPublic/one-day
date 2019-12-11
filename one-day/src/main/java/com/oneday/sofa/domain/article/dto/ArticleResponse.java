@@ -5,6 +5,7 @@ import java.util.List;
 import com.oneday.sofa.domain.article.domain.Article;
 import com.oneday.sofa.domain.comment.dto.CommentResponse;
 import com.oneday.sofa.domain.common.EntityDate;
+import com.oneday.sofa.domain.common.RecommendOrNot;
 import com.oneday.sofa.domain.member.dto.MemberResponse;
 
 public class ArticleResponse {
@@ -23,6 +24,8 @@ public class ArticleResponse {
 	
 	private EntityDate dates;
 	
+	private RecommendOrNot recommend;
+	
 	protected ArticleResponse() {}
 	
 	public ArticleResponse(Article article, List<CommentResponse> comments) {
@@ -33,6 +36,7 @@ public class ArticleResponse {
 		this.comments = comments;
 		this.hits = article.getHits();
 		this.dates = article.getDates();
+		this.recommend = article.getRecommendOrNot();
 	}
 	
 	public Long getId() {
@@ -61,5 +65,9 @@ public class ArticleResponse {
 	
 	public EntityDate getDates() {
 		return dates;
+	}
+	
+	public RecommendOrNot getRecommend() {
+		return recommend;
 	}
 }

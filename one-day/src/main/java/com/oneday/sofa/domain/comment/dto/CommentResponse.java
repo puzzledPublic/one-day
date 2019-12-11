@@ -18,7 +18,7 @@ public class CommentResponse {
 
 	private MemberResponse member;
 
-	private RecommendOrNot recommendOrNot;
+	private RecommendOrNot recommend;
 
 	private EntityDate dates;
 
@@ -31,7 +31,7 @@ public class CommentResponse {
 		this.id = comment.getId();
 		this.content = comment.getContent();
 		this.member = new MemberResponse(comment.getMember());
-		this.recommendOrNot = comment.getRecommendOrNot();
+		this.recommend = comment.getRecommendOrNot();
 		this.dates = comment.getDates();
 	}
 
@@ -47,8 +47,8 @@ public class CommentResponse {
 		return member;
 	}
 
-	public RecommendOrNot getRecommendOrNot() {
-		return recommendOrNot;
+	public RecommendOrNot getRecommend() {
+		return recommend;
 	}
 
 	public EntityDate getDates() {
