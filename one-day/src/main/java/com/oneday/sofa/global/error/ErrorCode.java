@@ -8,6 +8,9 @@ public enum ErrorCode {
 	//댓글
 	NESTED_COMMENT(400, "C001", "Comment is nested more than two"),
 	
+	//추천
+	ALREADY_RECOMMENDED(400, "J001", "Already Recommened"),
+	
 	//회원
 	USERNAME_DUPLICATION(400, "M001", "Username is already exist"),
 	EMAIL_DUPLICATION(400, "M002", "Email is already exist"),
