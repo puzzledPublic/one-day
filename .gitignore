@@ -4,7 +4,11 @@ build/
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**
 !**/src/test/**
+<<<<<<< HEAD
 /bin
+=======
+/one-day/bin/**
+>>>>>>> branch 'master' of https://github.com/puzzledPublic/one-day.git
 
 ### STS ###
 .apt_generated
