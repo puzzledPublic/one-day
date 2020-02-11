@@ -10,8 +10,8 @@ public class ArticleRequest {
 	private String title;
 	@NotEmpty
 	private String content;
-	@Min(1)
-	private Long boardId;
+	@NotEmpty
+	private String boardName;
 
 //	private List<@UploadFile MultipartFile> files = Collections.emptyList();
 	
@@ -31,12 +31,12 @@ public class ArticleRequest {
 		this.content = content;
 	}
 	
-	public Long getBoardId() {
-		return boardId;
+	public String getBoardName() {
+		return boardName;
 	}
 	
-	public void setBoardId(Long boardId) {
-		this.boardId = boardId;
+	public void setBoardName(String boardName) {
+		this.boardName = boardName;
 	}
 	
 //	public List<MultipartFile> getFiles() {

@@ -8,6 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.oneday.sofa.domain.article.dto.ArticleRequest;
 import com.oneday.sofa.domain.common.EntityDate;
 import com.oneday.sofa.domain.common.RecommendOrNot;
@@ -26,9 +27,11 @@ public class Article {
 	private String content;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
+	@JsonBackReference
 	private Member member;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
+	@JsonBackReference
 	private Board board;
 	
 	private int hits;

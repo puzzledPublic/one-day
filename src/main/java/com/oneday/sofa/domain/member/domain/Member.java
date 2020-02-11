@@ -17,6 +17,7 @@ import javax.persistence.OneToMany;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.oneday.sofa.domain.article.domain.Article;
 import com.oneday.sofa.domain.common.EntityDate;
 import com.oneday.sofa.domain.common.Role;
@@ -40,6 +41,7 @@ public class Member {
 	private String email;
 	
 	@OneToMany(mappedBy="member")
+	@JsonManagedReference
 	private List<Article> articles = new ArrayList<>();
 	
 	@Enumerated(EnumType.STRING)

@@ -49,7 +49,7 @@ public class ArticleService {
 	public void saveArticle(JWTMember jwtMember, ArticleRequest articleRequest) {
 		
 		Member member = memberService.findMemberById(jwtMember.getId());
-		Board board = boardRepository.findById(articleRequest.getBoardId()).orElseThrow(EntityNotFoundException::new);
+		Board board = boardRepository.findByName(articleRequest.getBoardName()).orElseThrow(EntityNotFoundException::new);
 
 		String title = articleRequest.getTitle();
 		String content = articleRequest.getContent();

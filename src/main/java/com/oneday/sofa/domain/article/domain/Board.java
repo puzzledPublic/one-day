@@ -9,6 +9,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 public class Board {
 	
@@ -20,6 +22,7 @@ public class Board {
 	private String name;
 	
 	@OneToMany(mappedBy="board")
+	@JsonManagedReference
 	private List<Article> articles = new ArrayList<>();
 	
 	protected Board() {}

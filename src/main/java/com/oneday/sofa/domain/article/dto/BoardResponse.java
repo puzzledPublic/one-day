@@ -1,52 +1,23 @@
 package com.oneday.sofa.domain.article.dto;
 
-import com.oneday.sofa.domain.article.domain.Article;
-import com.oneday.sofa.domain.common.EntityDate;
+import java.util.List;
 
 public class BoardResponse {
-
-	private Long id;
 	
-	private String title;
+	private List<ArticleInfo> articleInfoList;
 	
-	private String userName;
+	private PageInfo pageInfo;
 	
-	private long replyCount;
-	
-	private int hits;
-	
-	private EntityDate dates;
-	
-	public BoardResponse(Article article, long replyCount) {
-		this.id = article.getId();
-		this.title = article.getTitle();
-		this.userName = article.getMember().getUserName();
-		this.replyCount = replyCount;
-		this.hits = article.getHits();
-		this.dates = article.getDates();
+	public BoardResponse(List<ArticleInfo> articleInfoList, PageInfo pageInfo) {
+		this.articleInfoList = articleInfoList;
+		this.pageInfo = pageInfo;
 	}
 	
-	public Long getId() {
-		return id;
+	public List<ArticleInfo> getArticleInfoList() {
+		return articleInfoList;
 	}
 	
-	public String getTitle() {
-		return title;
-	}
-	
-	public String getUserName() {
-		return userName;
-	}
-	
-	public long getReplyCount() {
-		return replyCount;
-	}
-	
-	public int getHits() {
-		return hits;
-	}
-	
-	public EntityDate getDates() {
-		return dates;
+	public PageInfo getPageInfo() {
+		return pageInfo;
 	}
 }
