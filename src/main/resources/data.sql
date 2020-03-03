@@ -1,1 +1,1 @@
-INSERT INTO BOARD VALUES (HIBERNATE_SEQUENCE.NEXTVAL, 'free');
+insert into BOARD (id, name, display_name)values(hibernate_sequence.nextval, 'free', '자유게시판');

@@ -21,6 +21,9 @@ public class Board {
 	@Column(nullable=false, unique=true)
 	private String name;
 	
+	@Column
+	private String displayName;
+	
 	@OneToMany(mappedBy="board")
 	@JsonManagedReference
 	private List<Article> articles = new ArrayList<>();
@@ -39,7 +42,11 @@ public class Board {
 	public String getName() {
 		return name;
 	}
-
+	
+	public String getDisplayName() {
+		return displayName;
+	}
+	
 	public List<Article> getArticles() {
 		return articles;
 	}
