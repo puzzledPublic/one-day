@@ -26,6 +26,8 @@ public class ArticleResponse {
 	
 	private RecommendOrNot recommend;
 	
+	private String boardName;
+	
 	protected ArticleResponse() {}
 	
 	public ArticleResponse(Article article, List<CommentResponse> comments) {
@@ -37,6 +39,7 @@ public class ArticleResponse {
 		this.hits = article.getHits();
 		this.dates = article.getDates();
 		this.recommend = article.getRecommendOrNot();
+		this.boardName = article.getBoard().getName();
 	}
 	
 	public Long getId() {
@@ -69,5 +72,9 @@ public class ArticleResponse {
 	
 	public RecommendOrNot getRecommend() {
 		return recommend;
+	}
+	
+	public String getBoardName() {
+		return boardName;
 	}
 }

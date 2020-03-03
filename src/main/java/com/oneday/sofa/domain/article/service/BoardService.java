@@ -45,7 +45,7 @@ public class BoardService {
 		
 		PageInfo pageInfo = new PageInfo(page);
 		
-		BoardResponse boardResponse = new BoardResponse(articleList, pageInfo);
+		BoardResponse boardResponse = new BoardResponse(board, articleList, pageInfo);
 		
 		return boardResponse;
 	}
